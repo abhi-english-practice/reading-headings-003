@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aptis Reading - Matching Headings (B2+)</title>
+    <style>
+        :root {
+            --pastel-bg: #fdf6f0;
+            --pastel-card: #fffdf9;
+            --pastel-primary: #7c6f9e;
+            --pastel-accent: #a5b8d4;
+            --pastel-success: #a8d8b9;
+            --pastel-danger: #f4a7a7;
+            --pastel-warning: #f9e0a0;
+            --pastel-border: #e6dfd7;
+            --pastel-text: #5a5a6e;
+            --pastel-dark: #4a4a5a;
+            --pastel-quote-bg: #fef9ed;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --radius: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--pastel-bg);
+            color: var(--pastel-text);
+            line-height: 1.7;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            max-width: 950px;
+            width: 100%;
+            background: var(--pastel-card);
+            border-radius: calc(var(--radius) + 4px);
+            box-shadow: var(--shadow);
+            padding: 35px 40px;
+            position: relative;
+            border: 1px solid var(--pastel-border);
+        }
+
+        .badge {
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            background: var(--pastel-accent);
+            color: #fff;
+            padding: 6px 18px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(165, 184, 212, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--pastel-primary);
+            font-size: 1.9rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #8888aa;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        .instructions {
+            background: #f0edf7;
+            border-left: 5px solid var(--pastel-primary);
+            padding: 16px 20px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 28px;
+            font-size: 0.95rem;
+            color: var(--pastel-dark);
+        }
+
+        .instructions strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--pastel-primary);
+            margin-bottom: 18px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid var(--pastel-accent);
+            display: inline-block;
+        }
+
+        .paragraph {
+            background: #fffffffa;
+            border: 1.5px solid var(--pastel-border);
+            border-radius: var(--radius);
+            padding: 20px 22px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .paragraph:hover {
+            border-color: var(--pastel-accent);
+            box-shadow: 0 4px 15px rgba(165, 184, 212, 0.2);
+        }
+
+        .paragraph-label {
+            display: inline-block;
+            background: var(--pastel-primary);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .paragraph-text {
+            font-size: 0.95rem;
+            color: #4d4d60;
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .heading-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .heading-selector label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--pastel-primary);
+            margin-right: 4px;
+            white-space: nowrap;
+        }
+
+        select {
+            flex: 1;
+            min-width: 250px;
+            padding: 11px 16px;
+            border: 2px solid var(--pastel-border);
+            border-radius: 9px;
+            font-size: 0.9rem;
+            background: #fff;
+            color: var(--pastel-text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237c6f9e' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--pastel-accent);
+            box-shadow: 0 0 0 3px rgba(165, 184, 212, 0.3);
+        }
+
+        select.correct {
+            border-color: var(--pastel-success);
+            background-color: #f0faf4;
+            font-weight: 600;
+        }
+
+        select.incorrect {
+            border-color: var(--pastel-danger);
+            background-color: #fdf0f0;
+            font-weight: 600;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 13px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+            min-width: 170px;
+        }
+
+        .btn-check {
+            background: var(--pastel-primary);
+            color: #fff;
+        }
+
+        .btn-check:hover {
+            background: #6a5d8c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 111, 158, 0.4);
+        }
+
+        .btn-reset {
+            background: #c5c0d6;
+            color: #fff;
+        }
+
+        .btn-reset:hover {
+            background: #b0a9c4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(176, 169, 196, 0.4);
+        }
+
+        .result-section {
+            display: none;
+            margin-top: 32px;
+            padding: 25px;
+            border-radius: var(--radius);
+            background: #faf8fd;
+            border: 2px solid var(--pastel-border);
+        }
+
+        .result-section.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .score-box {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .score-number {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--pastel-primary);
+            line-height: 1.2;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            color: #8888aa;
+            margin-top: 2px;
+        }
+
+        .score-message {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        .explanation {
+            margin-top: 20px;
+        }
+
+        .explanation-item {
+            background: #fff;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-bottom: 16px;
+            border-left: 5px solid var(--pastel-border);
+            transition: all 0.3s ease;
+        }
+
+        .explanation-item.correct-ans {
+            border-left-color: var(--pastel-success);
+            background: #f6fcf8;
+        }
+
+        .explanation-item.wrong-ans {
+            border-left-color: var(--pastel-danger);
+            background: #fdf7f7;
+        }
+
+        .explanation-item h4 {
+            font-size: 1rem;
+            color: var(--pastel-primary);
+            margin-bottom: 8px;
+        }
+
+        .explanation-item p {
+            font-size: 0.9rem;
+            color: #5a5a6e;
+            margin-bottom: 4px;
+        }
+
+        .explanation-item .user-choice {
+            font-weight: 700;
+            color: var(--pastel-danger);
+        }
+
+        .explanation-item .correct-choice {
+            font-weight: 700;
+            color: var(--pastel-success);
+        }
+
+        .quote {
+            background: var(--pastel-quote-bg);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-style: italic;
+            font-size: 0.85rem;
+            color: #6a6a7a;
+            margin-top: 10px;
+            border-left: 3px solid var(--pastel-warning);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 18px;
+                border-radius: 12px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .heading-selector {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            select {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .btn {
+                min-width: 140px;
+                padding: 11px 22px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <span class="badge">🎓 B2+ Advanced</span>
+        <h1>📖 Aptis Reading: Matching Headings</h1>
+        <p class="subtitle">Chủ đề: The Psychology of Decision-Making — Học thuật nâng cao</p>
+
+        <div class="instructions">
+            <strong>📌 Hướng dẫn:</strong>
+            Đọc các đoạn văn A–D dưới đây. Chọn tiêu đề phù hợp nhất cho mỗi đoạn từ danh sách 7 tiêu đề.
+            Có <strong>3 tiêu đề gây nhiễu</strong>. Nhấn <strong>"Chấm điểm"</strong> để xem kết quả chi tiết.
+        </div>
+
+        <h2 class="section-title">🧠 The Psychology of Decision-Making</h2>
+
+        <!-- Đoạn A -->
+        <div class="paragraph" id="para-A">
+            <span class="paragraph-label">ĐOẠN A</span>
+            <p class="paragraph-text">
+                Traditional economic theory has long posited that humans are rational actors who weigh costs and benefits to maximise utility. However, decades of behavioural research have revealed that real-world decision-making deviates systematically from this idealised model. People frequently rely on mental shortcuts, are swayed by irrelevant contextual factors, and exhibit predictable irrationalities that challenge the notion of the purely logical decision-maker. This realisation has forced economists and psychologists to reconsider the very foundations of human choice.
+            </p>
+            <div class="heading-selector">
+                <label for="select-A">Chọn tiêu đề:</label>
+                <select id="select-A">
+                    <option value="">-- Chọn tiêu đề --</option>
+                    <option value="1">1. The interplay between emotion and reason in decision-making</option>
+                    <option value="2">2. How cognitive biases distort our choices</option>
+                    <option value="3">3. The evolutionary basis of human judgement</option>
+                    <option value="4">4. Practical applications of behavioural insights</option>
+                    <option value="5">5. The limitations of rational choice theory</option>
+                    <option value="6">6. The role of intuition in complex decisions</option>
+                    <option value="7">7. The impact of stress on decision quality</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Đoạn B -->
+        <div class="paragraph" id="para-B">
+            <span class="paragraph-label">ĐOẠN B</span>
+            <p class="paragraph-text">
+                A substantial body of literature documents the numerous biases that influence human judgement. For example, the anchoring effect occurs when an initial piece of information exerts undue weight on subsequent decisions, even when that anchor is arbitrary. Likewise, confirmation bias leads individuals to seek out and interpret evidence that supports pre-existing beliefs while disregarding contradictory data. These and other cognitive distortions operate largely below conscious awareness, yet they profoundly affect everything from financial investments to medical diagnoses, underscoring the fallibility of human reasoning.
+            </p>
+            <div class="heading-selector">
+                <label for="select-B">Chọn tiêu đề:</label>
+                <select id="select-B">
+                    <option value="">-- Chọn tiêu đề --</option>
+                    <option value="1">1. The interplay between emotion and reason in decision-making</option>
+                    <option value="2">2. How cognitive biases distort our choices</option>
+                    <option value="3">3. The evolutionary basis of human judgement</option>
+                    <option value="4">4. Practical applications of behavioural insights</option>
+                    <option value="5">5. The limitations of rational choice theory</option>
+                    <option value="6">6. The role of intuition in complex decisions</option>
+                    <option value="7">7. The impact of stress on decision quality</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Đoạn C -->
+        <div class="paragraph" id="para-C">
+            <span class="paragraph-label">ĐOẠN C</span>
+            <p class="paragraph-text">
+                Contrary to the classical view that emotions are obstacles to sound judgement, contemporary neuroscience suggests that affective states are integral to the decision-making process. Studies of patients with damage to the ventromedial prefrontal cortex—a region critical for integrating emotional signals—reveal that such individuals often make disastrous choices despite having intact logical reasoning abilities. This paradox demonstrates that feelings and rationality are not opposing forces but rather complementary components of a unified system for navigating complex choices.
+            </p>
+            <div class="heading-selector">
+                <label for="select-C">Chọn tiêu đề:</label>
+                <select id="select-C">
+                    <option value="">-- Chọn tiêu đề --</option>
+                    <option value="1">1. The interplay between emotion and reason in decision-making</option>
+                    <option value="2">2. How cognitive biases distort our choices</option>
+                    <option value="3">3. The evolutionary basis of human judgement</option>
+                    <option value="4">4. Practical applications of behavioural insights</option>
+                    <option value="5">5. The limitations of rational choice theory</option>
+                    <option value="6">6. The role of intuition in complex decisions</option>
+                    <option value="7">7. The impact of stress on decision quality</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Đoạn D -->
+        <div class="paragraph" id="para-D">
+            <span class="paragraph-label">ĐOẠN D</span>
+            <p class="paragraph-text">
+                These scientific findings have not remained confined to academic journals; they have been enthusiastically adopted by policymakers and marketers alike. Governments around the world have established behavioural insight units—colloquially known as 'nudge units'—to design interventions that steer citizens toward better choices without restricting their freedom. In the commercial sphere, companies use subtle environmental cues to influence consumer behaviour, from the strategic placement of products on supermarket shelves to the default settings in online forms. Such applications demonstrate the practical power of understanding how people actually make decisions.
+            </p>
+            <div class="heading-selector">
+                <label for="select-D">Chọn tiêu đề:</label>
+                <select id="select-D">
+                    <option value="">-- Chọn tiêu đề --</option>
+                    <option value="1">1. The interplay between emotion and reason in decision-making</option>
+                    <option value="2">2. How cognitive biases distort our choices</option>
+                    <option value="3">3. The evolutionary basis of human judgement</option>
+                    <option value="4">4. Practical applications of behavioural insights</option>
+                    <option value="5">5. The limitations of rational choice theory</option>
+                    <option value="6">6. The role of intuition in complex decisions</option>
+                    <option value="7">7. The impact of stress on decision quality</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Nút bấm -->
+        <div class="btn-group">
+            <button class="btn btn-check" onclick="checkAnswers()">✅ Chấm điểm</button>
+            <button class="btn btn-reset" onclick="resetAll()">🔄 Làm lại</button>
+        </div>
+
+        <!-- Kết quả -->
+        <div class="result-section" id="result-section">
+            <div class="score-box">
+                <div class="score-number" id="score-number">0/4</div>
+                <div class="score-label">Số câu đúng</div>
+                <div class="score-message" id="score-message"></div>
+            </div>
+            <div class="explanation" id="explanation-area"></div>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            'A': '5',
+            'B': '2',
+            'C': '1',
+            'D': '4'
+        };
+
+        const headingTexts = {
+            '1': '1. The interplay between emotion and reason in decision-making',
+            '2': '2. How cognitive biases distort our choices',
+            '3': '3. The evolutionary basis of human judgement',
+            '4': '4. Practical applications of behavioural insights',
+            '5': '5. The limitations of rational choice theory',
+            '6': '6. The role of intuition in complex decisions',
+            '7': '7. The impact of stress on decision quality'
+        };
+
+        const explanations = {
+            A: {
+                correctHeading: '5',
+                correctHeadingText: 'The limitations of rational choice theory',
+                explanation: 'Đoạn A phê phán lý thuyết lựa chọn hợp lý truyền thống và chỉ ra những hạn chế của nó khi con người không phải lúc nào cũng hành động theo lý trí.',
+                quote: 'Traditional economic theory has long posited that humans are rational actors... However, decades of behavioural research have revealed that real-world decision-making deviates systematically from this idealised model.'
+            },
+            B: {
+                correctHeading: '2',
+                correctHeadingText: 'How cognitive biases distort our choices',
+                explanation: 'Đoạn B mô tả các thiên kiến nhận thức như anchoring và confirmation bias, và cách chúng bóp méo phán đoán của chúng ta mà không nhận thức được.',
+                quote: 'The anchoring effect occurs when an initial piece of information exerts undue weight on subsequent decisions... confirmation bias leads individuals to seek out and interpret evidence that supports pre-existing beliefs.'
+            },
+            C: {
+                correctHeading: '1',
+                correctHeadingText: 'The interplay between emotion and reason in decision-making',
+                explanation: 'Đoạn C bàn về mối quan hệ giữa cảm xúc và lý trí, chứng minh rằng cảm xúc không phải là trở ngại mà là thành phần thiết yếu của việc ra quyết định.',
+                quote: 'Contrary to the classical view that emotions are obstacles to sound judgement, contemporary neuroscience suggests that affective states are integral to the decision-making process.'
+            },
+            D: {
+                correctHeading: '4',
+                correctHeadingText: 'Practical applications of behavioural insights',
+                explanation: 'Đoạn D trình bày các ứng dụng thực tiễn của các phát hiện hành vi trong chính sách công và marketing, như nudge units và chiến lược bán lẻ.',
+                quote: 'Governments around the world have established behavioural insight units—colloquially known as "nudge units"—to design interventions... companies use subtle environmental cues to influence consumer behaviour.'
+            }
+        };
+
+        function checkAnswers() {
+            const paragraphs = ['A', 'B', 'C', 'D'];
+            let score = 0;
+            let allAnswered = true;
+
+            paragraphs.forEach(p => {
+                const select = document.getElementById(`select-${p}`);
+                if (!select.value) {
+                    allAnswered = false;
+                }
+            });
+
+            if (!allAnswered) {
+                alert('⚠️ Vui lòng chọn tiêu đề cho tất cả các đoạn văn trước khi chấm điểm!');
+                return;
+            }
+
+            paragraphs.forEach(p => {
+                const select = document.getElementById(`select-${p}`);
+                const userAnswer = select.value;
+                const correctAnswer = correctAnswers[p];
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                    select.classList.add('correct');
+                    select.classList.remove('incorrect');
+                } else {
+                    select.classList.add('incorrect');
+                    select.classList.remove('correct');
+                }
+            });
+
+            const resultSection = document.getElementById('result-section');
+            resultSection.classList.add('show');
+
+            document.getElementById('score-number').textContent = `${score}/4`;
+
+            const messageElement = document.getElementById('score-message');
+            if (score === 4) {
+                messageElement.textContent = '🌟 Xuất sắc! Bạn có khả năng phân tích tuyệt vời!';
+                messageElement.style.color = '#6a9b7a';
+            } else if (score === 3) {
+                messageElement.textContent = '👏 Rất tốt! Chỉ cần tinh ý hơn một chút nữa!';
+                messageElement.style.color = '#88b098';
+            } else if (score === 2) {
+                messageElement.textContent = '👍 Khá! Hãy đọc kỹ giải thích để cải thiện nhé.';
+                messageElement.style.color = '#d4a373';
+            } else if (score === 1) {
+                messageElement.textContent = '📚 Cần luyện tập thêm! Đừng nản, hãy xem phân tích chi tiết.';
+                messageElement.style.color = '#e09f5f';
+            } else {
+                messageElement.textContent = '💪 Hãy thử lại! Đọc kỹ đoạn văn và tìm ý chính nhé.';
+                messageElement.style.color = '#e17055';
+            }
+
+            const explanationArea = document.getElementById('explanation-area');
+            explanationArea.innerHTML = '';
+
+            paragraphs.forEach(p => {
+                const select = document.getElementById(`select-${p}`);
+                const userAnswer = select.value;
+                const correctAnswer = correctAnswers[p];
+                const expData = explanations[p];
+                const isCorrect = userAnswer === correctAnswer;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = `explanation-item ${isCorrect ? 'correct-ans' : 'wrong-ans'}`;
+
+                let userChoiceText = headingTexts[userAnswer] || 'Chưa chọn';
+                let correctChoiceText = headingTexts[correctAnswer];
+
+                let html = `
+                    <h4>📌 Đoạn ${p} — ${isCorrect ? '✅ Đúng!' : '❌ Sai!'}</h4>
+                    <p>${expData.explanation}</p>
+                `;
+
+                if (!isCorrect) {
+                    html += `
+                        <p>
+                            <span class="user-choice">Bạn chọn:</span> ${userChoiceText}<br>
+                            <span class="correct-choice">Đáp án đúng:</span> ${correctChoiceText}
+                        </p>
+                    `;
+                } else {
+                    html += `
+                        <p><span class="correct-choice">Đáp án đúng:</span> ${correctChoiceText}</p>
+                    `;
+                }
+
+                html += `
+                    <div class="quote">💬 "${expData.quote}"</div>
+                `;
+
+                itemDiv.innerHTML = html;
+                explanationArea.appendChild(itemDiv);
+            });
+
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function resetAll() {
+            const paragraphs = ['A', 'B', 'C', 'D'];
+
+            paragraphs.forEach(p => {
+                const select = document.getElementById(`select-${p}`);
+                select.value = '';
+                select.classList.remove('correct', 'incorrect');
+            });
+
+            const resultSection = document.getElementById('result-section');
+            resultSection.classList.remove('show');
+
+            document.getElementById('explanation-area').innerHTML = '';
+            document.getElementById('score-number').textContent = '0/4';
+            document.getElementById('score-message').textContent = '';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
